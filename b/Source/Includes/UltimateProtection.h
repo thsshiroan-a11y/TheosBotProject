@@ -113,17 +113,6 @@ static inline void encrypt_memory_region(void *ptr, size_t size) {
 
 // ===== 5. CALL STACK OBFUSCATION =====
 
-__attribute__((noinline)) static void obf_call_1(void *ptr) {
-    // Dummy function to confuse stack traces
-    if (ptr) {
-        __asm__ volatile ("nop");
-    }
-}
-
-__attribute__((noinline)) static void obf_call_2(void *ptr) {
-    obf_call_1(ptr);
-}
-
 static inline void obf_call_wrapper(void (^block)(void)) {
     // Add noise to call stack
     void *noise = malloc(arc4random_uniform(256));
